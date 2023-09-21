@@ -25,7 +25,7 @@ type ModalProps = {
   handleCreate: (body: any) => void;
 };
 
-const AddProductModal: React.FC<ModalProps> = ({
+const DetailsProductModal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   handleCreate,
@@ -117,4 +117,4 @@ const AddProductModal: React.FC<ModalProps> = ({
   );
 };
 
-export default AddProductModal;
+export default DetailsProductModal;

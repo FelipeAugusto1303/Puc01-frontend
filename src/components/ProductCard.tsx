@@ -1,19 +1,18 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
 import React from "react";
 
-// import { Container } from './styles';
-
-const ProductCard: React.FC<any> = ({ product }) => {
+const ProductCard: React.FC<any> = ({ product, handleDetails }) => {
   return (
     <Flex
       flexDirection="column"
       alignItems="center"
       gap="20px"
       borderRadius="20px"
-      bg="#f5eeee"
+      bg="#e9f0eb"
       height="300px"
       width="200px"
       marginX="10px"
+      onClick={() => handleDetails(product.id)}
     >
       <Image
         src="./product_image.jpeg"
