@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   createProduct,
+  deleteProduct,
   getProduct,
   getProducts,
 } from "../../services/productService";
@@ -53,6 +54,13 @@ const Product: React.FC = () => {
     getProduct(id).then((response) => {
       setProduct(response.data);
       onOpenDetails();
+    });
+  };
+
+  const handleDeleteProduct = (id: number) => {
+    deleteProduct(id).then(() => {
+      onCloseDetails();
+      setUpdateList((prev) => !prev);
     });
   };
 
@@ -115,7 +123,8 @@ const Product: React.FC = () => {
       <DetailsProductModal
         isOpen={isOpenDetails}
         onClose={onCloseDetails}
-        handleCreate={handleCreateProduct}
+        handleDelete={handleDeleteProduct}
+        product={product}
       />
     </>
   );

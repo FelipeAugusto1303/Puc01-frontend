@@ -1,116 +1,76 @@
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Button,
-  FormControl,
-  FormLabel,
-  Input,
+  Flex,
+  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  Textarea,
+  Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  handleCreate: (body: any) => void;
+  handleDelete: (id: number) => void;
+  product: any;
 };
 
 const DetailsProductModal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
-  handleCreate,
+  handleDelete,
+  product,
 }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [qnt, setQnt] = useState("0");
-  const [value, setValue] = useState("0");
-
-  const format = (val: string) => `$ ` + val;
-  const parse = (val: string) => val.replace(/^\$/, "");
-
   const handleSubmit = () => {
-    var data = new FormData();
-    data.append("nome", name);
-    data.append("descricao", description);
-    data.append("quantidade", qnt);
-    data.append("valor", value);
-    handleCreate(data);
-
-    setName("");
-    setDescription("");
-    setQnt("0");
-    setValue("0");
-    onClose();
+    handleDelete(product.id);
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Crie um novo produto</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
-          <FormControl>
-            <FormLabel>Nome do produto</FormLabel>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
-          </FormControl>
+          <Image
+            src="./product_image.jpeg"
+            alt="product_image"
+            w="100%"
+            h="300px"
+            borderRadius="20px"
+          />
 
-          <FormControl mt={4}>
-            <FormLabel>Descrição</FormLabel>
-            <Textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </FormControl>
-
-          <FormControl mt={4}>
-            <FormLabel>Quantidade em estoque</FormLabel>
-            <NumberInput
-              value={qnt}
-              onChange={(value) => setQnt(value)}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormControl>
-
-          <FormControl mt={4}>
-            <FormLabel>Valor do produto</FormLabel>
-            <NumberInput
-              value={format(value)}
-              onChange={(value) => setValue(parse(value))}
-              precision={2}
-              step={0.1}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormControl>
+          <Flex flexDirection="column" w="100%" gap="5px" paddingLeft="10px">
+            <Text fontWeight="bold" fontSize="25px">
+              {product.nome}
+            </Text>
+            <Text fontWeight="bold" fontSize="15px" textAlign="justify">
+              {product.descricao}
+            </Text>
+            <Text fontWeight="bold" fontSize="15px">
+              R$ {product.valor}
+            </Text>
+            <Text fontWeight="bold" fontSize="15px">
+              quantidade: {product.quantidade} produtos
+            </Text>
+          </Flex>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-            Criar
+          <Button
+            colorScheme="red"
+            color="#fff"
+            leftIcon={<DeleteIcon />}
+            mr={3}
+            onClick={handleSubmit}
+          >
+            remover produto
           </Button>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>Fechar</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
