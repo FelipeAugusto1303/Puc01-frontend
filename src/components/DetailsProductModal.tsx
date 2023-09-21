@@ -11,7 +11,7 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 
 type ModalProps = {
   isOpen: boolean;
